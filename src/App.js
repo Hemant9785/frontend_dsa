@@ -21,7 +21,7 @@ const ProtectedRoute = ({ children }) => {
 
 const App = () => {
   const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
-  console.log(GOOGLE_CLIENT_ID)
+  
   return (
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
       <Router>
