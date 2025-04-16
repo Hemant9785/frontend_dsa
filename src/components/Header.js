@@ -1,6 +1,6 @@
 // src/components/Header.js
 import React, { useState } from 'react';
-import { AppBar, Toolbar, IconButton, Drawer, List, ListItem, ListItemText } from '@mui/material';
+import { AppBar, Toolbar, IconButton, Drawer, List, ListItem, ListItemText, Button, Box } from '@mui/material';
 import { Menu as MenuIcon } from '@mui/icons-material';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthService from '../services/auth.service';
@@ -41,7 +41,7 @@ const Header = () => {
             style: {
               backgroundColor: '#2A2A2A',
               height: '100%',
-              width: '40%',
+              width: '250px',
             },
           }}
         >
@@ -68,6 +68,30 @@ const Header = () => {
             )}
           </List>
         </Drawer>
+        {/* Desktop Menu */}
+        <Box sx={{ flexGrow: 1 }} /> {/* This empty Box will push the buttons to the right */}
+        <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+          {isAuthenticated ? (
+            <>
+              <Button color="inherit" component={Link} to="/questions">
+                Questions
+              </Button>
+              <Button color="inherit" component={Link} to="/discussions">
+                Discussions
+              </Button>
+              <Button color="inherit" component={Link} to="/feedback">
+                Submit Feedback
+              </Button>
+              <Button color="inherit" onClick={handleLogout}>
+                Logout
+              </Button>
+            </>
+          ) : (
+            <Button color="inherit" component={Link} to="/">
+              Login
+            </Button>
+          )}
+        </Box>
       </Toolbar>
     </AppBar>
   );
