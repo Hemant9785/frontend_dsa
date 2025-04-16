@@ -9,13 +9,8 @@ const SignIn = () => {
 
   const handleGoogleSuccess = async (response) => {
     try {
-      // Send the credential to your backend via the auth service
       const result = await AuthService.googleSignIn(response.credential);
-      
-      // Store user data in localStorage for persistence
       localStorage.setItem('user', JSON.stringify(result));
-      
-      // Redirect to questions page after successful sign-in
       navigate('/questions');
     } catch (error) {
       console.error('Authentication error:', error);

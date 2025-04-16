@@ -1,5 +1,5 @@
 // src/App.js
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -12,6 +12,7 @@ import Discussions from './components/Discussions';
 import AuthService from './services/auth.service';
 import QuestionDiscussion from './components/QuestionDiscussion';
 import Feedback from './components/Feedback';
+import './config/axiosConfig'; // Import the Axios configuration
 
 // Create a theme with the desired colors
 const theme = createTheme({
@@ -36,6 +37,12 @@ const ProtectedRoute = ({ children }) => {
 const App = () => {
   const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
   
+  useEffect(() => {
+    if (AuthService.isAuthenticated()) {
+      window.location.href = '/questions'; // Redirect to questions if logged in
+    }
+  }, []);
+
   return (
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
       <ThemeProvider theme={theme}>
