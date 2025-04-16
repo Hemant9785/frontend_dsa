@@ -10,6 +10,7 @@ const SignIn = () => {
   const handleGoogleSuccess = async (response) => {
     try {
       const result = await AuthService.googleSignIn(response.credential);
+      // console.log('Token:', result.token);
       localStorage.setItem('user', JSON.stringify(result));
       navigate('/questions');
     } catch (error) {

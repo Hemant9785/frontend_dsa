@@ -38,8 +38,8 @@ const App = () => {
   const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
   
   useEffect(() => {
-    if (AuthService.isAuthenticated()) {
-      window.location.href = '/questions'; // Redirect to questions if logged in
+    if (AuthService.isAuthenticated() && window.location.pathname !== '/questions') {
+      window.location.href = '/questions';
     }
   }, []);
 

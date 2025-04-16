@@ -242,8 +242,7 @@ const Questions = () => {
   };
 
   const handleDiscussionClick = (questionTitle) => {
-    // Open a new tab with the question discussion
-    window.open(`/question/${encodeURIComponent(questionTitle)}/discussion`, '_blank');
+    navigate(`/question/${encodeURIComponent(questionTitle)}/discussion`);
   };
 
   return (

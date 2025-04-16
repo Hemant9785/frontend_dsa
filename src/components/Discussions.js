@@ -332,8 +332,8 @@ const Discussions = () => {
                 action={
                   (() => {
                     const canEditDelete = discussion.user._id === currentUser?.id;
-                    console.log(canEditDelete)
-                    console.log(discussion.user._id,currentUser?.id)
+                    // console.log(canEditDelete)
+                    // console.log(discussion.user._id,currentUser?.id)
                     return canEditDelete && (
                       <Box>
                         <IconButton onClick={() => handleEdit(discussion)} style={{ color: '#ffffff' }}>
