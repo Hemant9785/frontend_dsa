@@ -1,0 +1,10 @@
+:root {
+  --primary-bg: #1A1A1A;
+  --secondary-bg: #121212;
+  --text-color: #E0E0E0;
+  --highlight-color: #FFA116; /* or #2F81F7 */
+  --font-family: 'Roboto Mono', 'Fira Code', 'Inter', sans-serif;
+  --border-radius: 4px;
+  --padding: 8px;
+  --shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
