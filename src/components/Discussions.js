@@ -256,9 +256,9 @@ const Discussions = () => {
   };
 
   return (
-    <Container maxWidth="md">
+    <Container style={{ backgroundColor: '#1A1A1A', minHeight: '100vh', padding: '20px' }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', my: 3 }}>
-        <Typography variant="h4" component="h1">
+        <Typography variant="h4" component="h1" style={{ color: '#ffffff' }}>
           Discussions
         </Typography>
         <Button
@@ -269,13 +269,14 @@ const Discussions = () => {
             setNewDiscussion({ title: '', content: '', tags: [] });
             setOpenDialog(true);
           }}
+          style={{ backgroundColor: '#373C42', color: '#ffffff' }}
         >
           New Discussion
         </Button>
       </Box>
 
       {/* Search bar */}
-      <Paper component="form" sx={{ p: 1, mb: 3, display: 'flex' }} onSubmit={handleSearchSubmit}>
+      <Paper component="form" sx={{ p: 1, mb: 3, display: 'flex', backgroundColor: '#1A1A1A' }} onSubmit={handleSearchSubmit}>
         <TextField
           fullWidth
           variant="outlined"
@@ -289,16 +290,20 @@ const Discussions = () => {
                 <EditIcon />
               </InputAdornment>
             ),
+            style: { backgroundColor: '#2A2A2A', color: '#ffffff' },
+          }}
+          InputLabelProps={{
+            style: { color: '#ffffff' },
           }}
         />
-        <Button type="submit" variant="contained" sx={{ ml: 1 }}>
+        <Button type="submit" variant="contained" sx={{ ml: 1 }} style={{ backgroundColor: '#373C42', color: '#ffffff' }}>
           Search
         </Button>
       </Paper>
 
       {/* Error message */}
       {error && (
-        <Typography color="error" sx={{ mb: 2 }}>
+        <Typography color="error" sx={{ mb: 2 }} style={{ color: '#ffffff' }}>
           {error}
         </Typography>
       )}
@@ -309,21 +314,21 @@ const Discussions = () => {
           <CircularProgress />
         </Box>
       ) : discussions.length === 0 ? (
-        <Typography variant="h6" color="textSecondary" sx={{ textAlign: 'center', my: 4 }}>
+        <Typography variant="h6" color="textSecondary" sx={{ textAlign: 'center', my: 4 }} style={{ color: '#ffffff' }}>
           No discussions found.
         </Typography>
       ) : (
         <>
           {discussions.map((discussion) => (
-            <Card key={discussion._id} sx={{ mb: 3 }}>
+            <Card key={discussion._id} sx={{ mb: 3 }} style={{ backgroundColor: '#2A2A2A' }}>
               <CardHeader
                 avatar={
                   <Avatar>
                     {discussion.user?.name?.charAt(0) || <PersonIcon />}
                   </Avatar>
                 }
-                title={discussion.title}
-                subheader={`Posted by ${discussion.user?.name || 'Anonymous'} on ${formatDate(discussion.createdAt)}`}
+                title={<Typography variant="h5" style={{ color: '#ffffff' }}>{discussion.title}</Typography>}
+                subheader={<Typography variant="caption" style={{ color: '#ffffff' }}>Posted by {discussion.user?.name || 'Anonymous'}</Typography>}
                 action={
                   (() => {
                     const canEditDelete = discussion.user._id === currentUser?.id;
@@ -331,12 +336,13 @@ const Discussions = () => {
                     console.log(discussion.user._id,currentUser?.id)
                     return canEditDelete && (
                       <Box>
-                        <IconButton onClick={() => handleEdit(discussion)}>
+                        <IconButton onClick={() => handleEdit(discussion)} style={{ color: '#ffffff' }}>
                           <EditIcon />
                         </IconButton>
                         <IconButton 
                           onClick={() => handleDelete(discussion._id)}
                           color="error"
+                          style={{ color: '#ffffff' }}
                         >
                           <DeleteIcon />
                         </IconButton>
@@ -346,7 +352,7 @@ const Discussions = () => {
                 }
               />
               <CardContent>
-                <Typography variant="body1" paragraph>
+                <Typography variant="body1" paragraph style={{ color: '#ffffff' }}>
                   {discussion.content}
                 </Typography>
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 2 }}>
@@ -359,12 +365,14 @@ const Discussions = () => {
                         setSearchTag(tag);
                         setPage(1);
                       }}
+                      style={{ backgroundColor: '#ffffff', color: '#1A1A1A' }}
                     />
                   ))}
                 </Box>
                 <Button
                   variant="text"
                   onClick={() => toggleCommentsVisibility(discussion._id)}
+                  style={{ color: '#ffffff' }}
                 >
                   {commentsVisible[discussion._id] ? 'Hide Comments' : 'Show Comments'}
                 </Button>
@@ -385,22 +393,24 @@ const Discussions = () => {
                   <IconButton 
                     onClick={() => handleVote(discussion._id, 'upvote')}
                     color={isUpvoted(discussion) ? "primary" : "default"}
+                    style={{ color: '#ffffff' }}
                   >
                     <ThumbUpIcon />
                   </IconButton>
                 </Tooltip>
-                <Typography variant="body2">
+                <Typography variant="body2" style={{ color: '#ffffff' }}>
                   {discussion.upvotes?.length || 0}
                 </Typography>
                 <Tooltip title="Downvote">
                   <IconButton 
                     onClick={() => handleVote(discussion._id, 'downvote')}
                     color={isDownvoted(discussion) ? "primary" : "default"}
+                    style={{ color: '#ffffff' }}
                   >
                     <ThumbDownIcon />
                   </IconButton>
                 </Tooltip>
-                <Typography variant="body2">
+                <Typography variant="body2" style={{ color: '#ffffff' }}>
                   {discussion.downvotes?.length || 0}
                 </Typography>
               </CardActions>
@@ -414,8 +424,9 @@ const Discussions = () => {
                 variant="outlined" 
                 onClick={handleLoadMore}
                 disabled={loading}
+                style={{ backgroundColor: '#ffffff', color: '#1A1A1A' }}
               >
-                {loading ? <CircularProgress size={24} /> : 'Load More'}
+                {loading ? <CircularProgress size={24} style={{ color: '#ffffff' }} /> : 'Load More'}
               </Button>
             </Box>
           )}
@@ -423,8 +434,8 @@ const Discussions = () => {
       )}
 
       {/* Dialog for creating/editing discussion */}
-      <Dialog open={openDialog} onClose={() => setOpenDialog(false)} fullWidth maxWidth="md">
-        <DialogTitle>
+      <Dialog open={openDialog} onClose={() => setOpenDialog(false)} fullWidth maxWidth="md" PaperProps={{ style: { backgroundColor: '#1A1A1A' } }}>
+        <DialogTitle style={{ color: '#ffffff' }}>
           {editingDiscussion ? 'Edit Discussion' : 'Create New Discussion'}
         </DialogTitle>
         <DialogContent>
@@ -436,6 +447,13 @@ const Discussions = () => {
             value={newDiscussion.title}
             onChange={(e) => setNewDiscussion(prev => ({ ...prev, title: e.target.value }))}
             sx={{ mb: 2 }}
+            style={{ backgroundColor: '#2A2A2A', color: '#ffffff' }}
+            InputLabelProps={{
+              style: { color: '#ffffff' },
+            }}
+            InputProps={{
+              style: { color: '#ffffff' },
+            }}
           />
           <TextField
             margin="dense"
@@ -446,6 +464,13 @@ const Discussions = () => {
             value={newDiscussion.content}
             onChange={(e) => setNewDiscussion(prev => ({ ...prev, content: e.target.value }))}
             sx={{ mb: 2 }}
+            style={{ backgroundColor: '#2A2A2A', color: '#ffffff' }}
+            InputLabelProps={{
+              style: { color: '#ffffff' },
+            }}
+            InputProps={{
+              style: { color: '#ffffff' },
+            }}
           />
           <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
             <TextField
@@ -453,20 +478,27 @@ const Discussions = () => {
               value={tagInput}
               onChange={(e) => setTagInput(e.target.value)}
               sx={{ marginRight: 1 }}
+              style={{ backgroundColor: '#2A2A2A', color: '#ffffff' }}
+              InputLabelProps={{
+                style: { color: '#ffffff' },
+              }}
+              InputProps={{
+                style: { color: '#ffffff' },
+              }}
             />
-            <Button variant="outlined" onClick={handleAddTag}>Add Tag</Button>
+            <Button variant="outlined" onClick={handleAddTag} style={{ backgroundColor: '#373C42', color: '#1A1A1A' }}>Add Tag</Button>
           </Box>
           <Box sx={{ marginBottom: 2 }}>
             {newDiscussion.tags.map((tag, index) => (
-              <Typography key={index} variant="body2" sx={{ display: 'inline-block', marginRight: 1 }}>
+              <Typography key={index} variant="body2" sx={{ display: 'inline-block', marginRight: 1 }} style={{ color: '#ffffff' }}>
                 #{tag}
               </Typography>
             ))}
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenDialog(false)}>Cancel</Button>
-          <Button onClick={handleCreateDiscussion} variant="contained">
+          <Button onClick={() => setOpenDialog(false)} style={{ backgroundColor: '#373C42', color: '#ffffff' }}>Cancel</Button>
+          <Button onClick={handleCreateDiscussion} variant="contained" style={{ backgroundColor: '#373C42', color: '#ffffff' }}>
             {editingDiscussion ? 'Update' : 'Create'}
           </Button>
         </DialogActions>

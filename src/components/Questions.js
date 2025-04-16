@@ -17,6 +17,21 @@ import {
 import axios from 'axios';
 import AuthService from '../services/auth.service';
 import { useNavigate } from 'react-router-dom';
+import { FiExternalLink } from 'react-icons/fi';
+
+const companyContainerStyle = {
+  display: 'flex',
+  overflowX: 'auto',
+  scrollSnapType: 'x mandatory',
+  gap: '10px',
+  padding: '10px 0',
+};
+
+const companyItemStyle = {
+  flex: '0 0 auto',
+  scrollSnapAlign: 'start',
+  minWidth: '100px', // Adjust based on the number of items you want visible
+};
 
 const Questions = () => {
   const [questions, setQuestions] = useState([]);
@@ -31,6 +46,7 @@ const Questions = () => {
   const [newNote, setNewNote] = useState({ content: '', isPrivate: true });
   const [newDiscussion, setNewDiscussion] = useState({ title: '', content: '' });
   const navigate = useNavigate();
+  const darkMode = localStorage.getItem('theme') === 'dark';
 
   // Fetch companies on component mount
   useEffect(() => {
@@ -231,35 +247,45 @@ const Questions = () => {
   };
 
   return (
-    <Container>
-      <Typography variant="h4" gutterBottom>
+    <Container style={{ backgroundColor: '#1A1A1A', minHeight: '100vh', padding: '20px' }}>
+      <Typography variant="h4" gutterBottom style={{ color: '#ffffff' }}>
         Questions
       </Typography>
-      <Select
-        value={filter}
-        onChange={(e) => setFilter(e.target.value)}
-        style={{ marginBottom: '20px', width: '200px' }}
-      >
-        {companies.map((company) => (
-          <MenuItem key={company} value={company}>
-            {company.charAt(0).toUpperCase() + company.slice(1).replace(/_/g, ' ')}
-          </MenuItem>
-        ))}
-      </Select>
+      <div style={companyContainerStyle}>
+        <Select
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+          style={{ marginBottom: '20px', width: '200px', backgroundColor: '#2A2A2A', color: '#ffffff' }}
+          MenuProps={{
+            PaperProps: {
+              style: {
+                backgroundColor: '#2A2A2A', // Set dropdown background color
+                color: '#ffffff', // Set dropdown text color
+              },
+            },
+          }}
+        >
+          {companies.map((company) => (
+            <MenuItem key={company} value={company} style={companyItemStyle}>
+              {company.charAt(0).toUpperCase() + company.slice(1).replace(/_/g, ' ')}
+            </MenuItem>
+          ))}
+        </Select>
+      </div>
       {loading ? (
         <div style={{ display: 'flex', justifyContent: 'center', padding: '2rem' }}>
           <CircularProgress />
         </div>
       ) : (
-        <TableContainer component={Paper} style={{ maxHeight: '80vh', overflowY: 'auto' }}>
+        <TableContainer component={Paper} style={{ maxHeight: '80vh', overflowY: 'auto', backgroundColor: '#1A1A1A' }}>
           <Table stickyHeader>
             <TableHead>
               <TableRow>
-                <TableCell>Question Number</TableCell>
-                <TableCell>Title</TableCell>
-                <TableCell>Question Link</TableCell>
-                <TableCell>Difficulty Level</TableCell>
-                <TableCell>Action</TableCell>
+                <TableCell style={{ color: '#ffffff' }}>Question Number</TableCell>
+                <TableCell style={{ color: '#ffffff' }}>Title</TableCell>
+                <TableCell style={{ color: '#ffffff' }}>Question Link</TableCell>
+                <TableCell style={{ color: '#ffffff' }}>Difficulty Level</TableCell>
+                <TableCell style={{ color: '#ffffff' }}>Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -269,29 +295,34 @@ const Questions = () => {
                   style={{ 
                     backgroundColor: solvedQuestions.includes(question.title) 
                       ? 'rgba(76, 175, 80, 0.1)' 
-                      : 'white' 
+                      : '#1A1A1A' 
                   }}
                 >
-                  <TableCell>{index + 1}</TableCell>
-                  <TableCell>{question.title}</TableCell>
+                  <TableCell style={{ color: '#ffffff' }}>{index + 1}</TableCell>
+                  <TableCell style={{ color: '#ffffff' }}>{question.title}</TableCell>
                   <TableCell>
-                    <a href={question.link} target="_blank" rel="noopener noreferrer">
-                      {question.link}
-                    </a>
+                    <IconButton
+                      component="a"
+                      href={question.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FiExternalLink style={{ color: '#ffffff' }} />
+                    </IconButton>
                   </TableCell>
-                  <TableCell>{question.difficulty}</TableCell>
+                  <TableCell style={{ color: '#ffffff' }}>{question.difficulty}</TableCell>
                   <TableCell>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                       <IconButton 
                         onClick={() => toggleSolvedStatus(question.title)}
                         color={solvedQuestions.includes(question.title) ? "primary" : "default"}
                       >
-                        <CheckIcon />
+                        <CheckIcon style={{ color: '#ffffff' }} />
                       </IconButton>
                       <IconButton
                         onClick={() => handleDiscussionClick(question.title)}
                       >
-                        <CommentIcon />
+                        <CommentIcon style={{ color: '#ffffff' }} />
                       </IconButton>
                     </Box>
                   </TableCell>

@@ -34,16 +34,11 @@ const CommentSection = ({ discussionId }) => {
         return;
       }
 
-      console.log('Submitting comment:', newCommentText); // Debugging log
-      console.log(discussionId, "discussionId"); // Ensure discussionId is correct
-
       const response = await axios.post(`${process.env.REACT_APP_API_URL}api/comments/${discussionId}`, {
         userId,
         text: newCommentText,
         parentCommentId: null, // Direct comment to discussion
       });
-
-      console.log('Comment added:', response.data); // Debugging log
 
       setComments((prevComments) => [...prevComments, response.data]);
       setNewCommentText('');
@@ -100,8 +95,14 @@ const CommentSection = ({ discussionId }) => {
           value={newCommentText}
           onChange={(e) => setNewCommentText(e.target.value)}
           placeholder="Add a comment..."
+          InputProps={{
+            style: { color: '#ffffff', backgroundColor: '#353A40' },
+          }}
+          InputLabelProps={{
+            style: { color: '#ffffff' },
+          }}
         />
-        <Button onClick={handleAddComment} variant="contained" sx={{ mt: 1 }}>
+        <Button onClick={handleAddComment} variant="contained" sx={{ mt: 1, backgroundColor: '#373C42', color: '#ffffff' }}>
           Submit
         </Button>
       </Box>
@@ -112,17 +113,7 @@ const CommentSection = ({ discussionId }) => {
           border: '1px solid #ccc',
           borderRadius: '4px',
           padding: '8px',
-          backgroundColor: '#f9f9f9',
-          '&::-webkit-scrollbar': {
-            width: '8px',
-          },
-          '&::-webkit-scrollbar-thumb': {
-            backgroundColor: '#888',
-            borderRadius: '4px',
-          },
-          '&::-webkit-scrollbar-thumb:hover': {
-            backgroundColor: '#555',
-          },
+          backgroundColor: '#2A2A2A',
         }}
       >
         {comments.map((comment) => (

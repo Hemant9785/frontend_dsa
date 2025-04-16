@@ -103,13 +103,13 @@ const QuestionDiscussion = () => {
   const renderComments = (comments, level = 0) => {
     return comments.map((comment) => (
       <Box key={comment._id} sx={{ marginLeft: level * 4, marginBottom: 2 }}>
-        <Typography variant="body2" sx={{ color: '#555' }}>
+        <Typography variant="body2" sx={{ color: '#ffffff' }}>
           {comment.user.name}
         </Typography>
         <Typography variant="body2" sx={{ marginBottom: 1 }}>
           {comment.text}
         </Typography>
-        <Button size="small" onClick={() => setReplyText(comment._id)}>Reply</Button>
+        <Button size="small" onClick={() => setReplyText(comment._id)} style={{ color: '#ffffff' }}>Reply</Button>
         {replyText === comment._id && (
           <Box sx={{ marginTop: 1 }}>
             <TextField
@@ -117,9 +117,15 @@ const QuestionDiscussion = () => {
               label="Reply"
               value={replyTexts[comment._id] || ''}
               onChange={(e) => setReplyTexts({ ...replyTexts, [comment._id]: e.target.value })}
-              sx={{ marginBottom: 1 }}
+              sx={{ marginBottom: 1, backgroundColor: '#353A40', color: '#ffffff' }}
+              InputLabelProps={{
+                style: { color: '#ffffff' },
+              }}
+              InputProps={{
+                style: { color: '#ffffff' },
+              }}
             />
-            <Button variant="outlined" onClick={() => handleAddComment(comment.discussion, comment._id)}>
+            <Button variant="outlined" onClick={() => handleAddComment(comment.discussion, comment._id)} style={{ backgroundColor: '#373C42', color: '#ffffff' }}>
               Submit Reply
             </Button>
           </Box>
@@ -130,18 +136,24 @@ const QuestionDiscussion = () => {
   };
 
   return (
-    <Box sx={{ padding: 2 }}>
-      <Typography variant="h4" gutterBottom>
-        Discussions for {title}
+    <Box sx={{ padding: 2, backgroundColor: '#1A1A1A', minHeight: '100vh' }}>
+      <Typography variant="h4" gutterBottom style={{ color: '#ffffff' }}>
+        {title}
       </Typography>
-      <Paper sx={{ padding: 2, marginBottom: 2 }}>
-        <Typography variant="h6">Create a New Discussion</Typography>
+      <Paper sx={{ padding: 2, marginBottom: 2, backgroundColor: '#2A2A2A' }}>
+        <Typography variant="h6" style={{ color: '#ffffff' }}>New Discussion</Typography>
         <TextField
           fullWidth
           label="Title"
           value={newDiscussion.title}
           onChange={(e) => setNewDiscussion({ ...newDiscussion, title: e.target.value })}
-          sx={{ marginBottom: 2 }}
+          sx={{ marginBottom: 2, backgroundColor: '#353A40', color: '#ffffff' }}
+          InputLabelProps={{
+            style: { color: '#ffffff' },
+          }}
+          InputProps={{
+            style: { color: '#ffffff' },
+          }}
         />
         <TextField
           fullWidth
@@ -150,22 +162,29 @@ const QuestionDiscussion = () => {
           rows={4}
           value={newDiscussion.content}
           onChange={(e) => setNewDiscussion({ ...newDiscussion, content: e.target.value })}
-          sx={{ marginBottom: 2 }}
+          sx={{ marginBottom: 2, backgroundColor: '#353A40', color: '#ffffff' }}
+          InputLabelProps={{
+            style: { color: '#ffffff' },
+          }}
+          InputProps={{
+            style: { color: '#ffffff' },
+          }}
         />
-        <Button variant="contained" onClick={handleCreateDiscussion}>
+        <Button variant="contained" onClick={handleCreateDiscussion} style={{ backgroundColor: '#373C42', color: '#ffffff' }}>
           Submit
         </Button>
       </Paper>
       {discussions.map((discussion) => (
-        <Paper key={discussion._id} sx={{ padding: 2, marginBottom: 2 }}>
-          <Typography variant="h6">{discussion.title}</Typography>
-          <Typography variant="body1">{discussion.content}</Typography>
-          <Typography variant="body2" sx={{ color: '#555' }}>
+        <Paper key={discussion._id} sx={{ padding: 2, marginBottom: 2, backgroundColor: '#2A2A2A' }}>
+          <Typography variant="h6" style={{ color: '#ffffff' }}>{discussion.title}</Typography>
+          <Typography variant="body1" style={{ color: '#ffffff' }}>{discussion.content}</Typography>
+          <Typography variant="body2" style={{ color: '#ffffff' }}>
             {discussion.user.name}
           </Typography>
           <Button
             variant="text"
             onClick={() => setCommentsVisible((prev) => ({ ...prev, [discussion._id]: !prev[discussion._id] }))}
+            style={{ color: '#ffffff' }}
           >
             {commentsVisible[discussion._id] ? 'Hide Comments' : 'Show Comments'}
           </Button>
@@ -177,9 +196,15 @@ const QuestionDiscussion = () => {
                   label="Add a comment"
                   value={commentTexts[discussion._id] || ''}
                   onChange={(e) => setCommentTexts({ ...commentTexts, [discussion._id]: e.target.value })}
-                  sx={{ marginRight: 1 }}
+                  sx={{ marginRight: 1, backgroundColor: '#353A40', color: '#ffffff' }}
+                  InputLabelProps={{
+                    style: { color: '#ffffff' },
+                  }}
+                  InputProps={{
+                    style: { color: '#ffffff' },
+                  }}
                 />
-                <Button variant="outlined" onClick={() => handleAddComment(discussion._id)}>
+                <Button variant="outlined" onClick={() => handleAddComment(discussion._id)} style={{ backgroundColor: '#373C42', color: '#ffffff' }}>
                   Add Comment
                 </Button>
               </Box>
