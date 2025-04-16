@@ -65,7 +65,7 @@ const Discussions = () => {
         params.tag = searchTag;
       }
       
-      const response = await axios.get('http://localhost:5000/api/discussions', { params });
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}api/discussions`, { params });
       
       const discussionsWithComments = response.data.discussions.map(discussion => ({
         ...discussion,
@@ -152,7 +152,7 @@ const Discussions = () => {
         createdBy: userId
       };
 
-      await axios.post('http://localhost:5000/api/discussions', discussionData);
+      await axios.post(`${process.env.REACT_APP_API_URL}api/discussions`, discussionData);
 
       // Clear form and close dialog
       setOpenDialog(false);
@@ -178,7 +178,7 @@ const Discussions = () => {
         return;
       }
 
-      const response = await axios.post(`http://localhost:5000/api/discussions/${discussionId}/vote`, {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}api/discussions/${discussionId}/vote`, {
         userId,
         voteType
       });
@@ -233,7 +233,7 @@ const Discussions = () => {
         return;
       }
 
-      const response = await axios.delete(`http://localhost:5000/api/discussions/${discussionId}`, {
+      const response = await axios.delete(`${process.env.REACT_APP_API_URL}api/discussions/${discussionId}`, {
         data: { userId }  // Send userId in request body
       });
 

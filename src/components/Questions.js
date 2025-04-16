@@ -54,7 +54,7 @@ const Questions = () => {
 
     try {
       const response = await axios.get(
-        'http://localhost:5000/api/user/solved-questions',
+        `${process.env.REACT_APP_API_URL}api/user/solved-questions`,
         { params: { userId: currentUser.id } }
       );
       
@@ -70,7 +70,7 @@ const Questions = () => {
 
   const fetchCompanies = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/companies');
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}api/companies`);
       setCompanies(response.data);
     } catch (error) {
       console.error("Error fetching companies:", error);
@@ -81,7 +81,9 @@ const Questions = () => {
   const fetchQuestions = async (company) => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:5000/api/questions/${company}`);
+      // console.log("server ulr")
+     
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}api/questions/${company}`);
       setQuestions(response.data);
     } catch (error) {
       console.error("Error fetching questions:", error);
@@ -103,7 +105,7 @@ const Questions = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/user/solved-questions/${endpoint}`,
+        `${process.env.REACT_APP_API_URL}api/user/solved-questions/${endpoint}`,
         { 
           title: questionTitle,
           userId: currentUser.id
@@ -138,7 +140,7 @@ const Questions = () => {
     try {
       // Fetch discussions
       const discussionsResponse = await axios.get(
-        `http://localhost:5000/api/questions/${encodeURIComponent(questionTitle)}/discussions`
+        `${process.env.REACT_APP_API_URL}api/questions/${encodeURIComponent(questionTitle)}/discussions`
       );
       setDiscussions(discussionsResponse.data);
 
@@ -146,7 +148,7 @@ const Questions = () => {
       const currentUser = AuthService.getCurrentUser();
       if (currentUser) {
         const notesResponse = await axios.get(
-          `http://localhost:5000/api/questions/${encodeURIComponent(questionTitle)}/notes`,
+          `${process.env.REACT_APP_API_URL}api/questions/${encodeURIComponent(questionTitle)}/notes`,
           { params: { userId: currentUser.id } }
         );
         setNotes(notesResponse.data);
@@ -163,7 +165,7 @@ const Questions = () => {
 
     try {
       await axios.post(
-        `http://localhost:5000/api/questions/${encodeURIComponent(questionTitle)}/notes`,
+        `${process.env.REACT_APP_API_URL}api/questions/${encodeURIComponent(questionTitle)}/notes`,
         {
           content: newNote.content,
           isPrivate: newNote.isPrivate,
@@ -186,7 +188,7 @@ const Questions = () => {
 
     try {
       await axios.post(
-        `http://localhost:5000/api/questions/${encodeURIComponent(questionTitle)}/discussions`,
+        `${process.env.REACT_APP_API_URL}api/questions/${encodeURIComponent(questionTitle)}/discussions`,
         {
           title: newDiscussion.title,
           content: newDiscussion.content,
@@ -208,7 +210,7 @@ const Questions = () => {
     if (!currentUser) return;
 
     try {
-      await axios.post(`http://localhost:5000/api/questions/discussions/${discussionId}/vote`, {
+      await axios.post(`${process.env.REACT_APP_API_URL}api/questions/discussions/${discussionId}/vote`, {
         userId: currentUser.id,
         voteType
       });

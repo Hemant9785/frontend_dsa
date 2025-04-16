@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000';
+
 
 class AuthService {
   async googleSignIn(credential) {
-    const response = await axios.post(`${API_URL}/auth/google`, { credential });
+    const response = await axios.post(`${process.env.REACT_APP_API_URL}auth/google`, { credential });
     return response.data;
   }
 

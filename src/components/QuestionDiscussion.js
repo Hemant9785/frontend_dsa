@@ -27,7 +27,7 @@ const QuestionDiscussion = () => {
 
   const fetchDiscussions = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/question-discussions/${encodeURIComponent(title)}`);
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}api/question-discussions/${encodeURIComponent(title)}`);
       setDiscussions(response.data);
     } catch (error) {
       console.error('Error fetching discussions:', error);
@@ -47,7 +47,7 @@ const QuestionDiscussion = () => {
         return;
       }
 
-      const response = await axios.post('http://localhost:5000/api/question-discussions', {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}api/question-discussions`, {
         ...newDiscussion,
         userId,
         questionTitle: title.trim(),
@@ -75,7 +75,7 @@ const QuestionDiscussion = () => {
         return;
       }
 
-      const response = await axios.post(`http://localhost:5000/api/question-comment-reply/${discussionId}`, {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}api/question-comment-reply/${discussionId}`, {
         userId,
         text,
         parentCommentId,

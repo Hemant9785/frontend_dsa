@@ -11,7 +11,7 @@ const CommentSection = ({ discussionId }) => {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/comments/${discussionId}`);
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}api/comments/${discussionId}`);
         setComments(response.data);
       } catch (error) {
         console.error('Error fetching comments:', error);
@@ -37,7 +37,7 @@ const CommentSection = ({ discussionId }) => {
       console.log('Submitting comment:', newCommentText); // Debugging log
       console.log(discussionId, "discussionId"); // Ensure discussionId is correct
 
-      const response = await axios.post(`http://localhost:5000/api/comments/${discussionId}`, {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}api/comments/${discussionId}`, {
         userId,
         text: newCommentText,
         parentCommentId: null, // Direct comment to discussion
@@ -61,7 +61,7 @@ const CommentSection = ({ discussionId }) => {
         return;
       }
 
-      const response = await axios.post(`http://localhost:5000/api/comments/${discussionId}`, {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}api/comments/${discussionId}`, {
         userId,
         text,
         parentCommentId,
